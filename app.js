@@ -80,7 +80,7 @@ function initializeBoard(data) {
   );
 
   // F. पदाधिकारी विवरण
-  $('officials-list').innerHTML = (data.people || []).map(p => `
+  $('officials-list').innerHTML = (data.person || []).map(p => `
     <div class="official-box">
       <div class="official-photo">
         ${p.n ? p.n[0] : '•'}

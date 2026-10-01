@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>बेनीघाट रोराङ गाउँपालिका - डिजिटल नागरिक सूचना पाटी</title>
+  
+  <!-- गुगल फन्टहरू: देवानगरी र अङ्कहरूका लागि उत्कृष्ट छनोट -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="kiosk-wrapper">
+    
+    <!-- १. शीर्ष हेडर (Header Section) -->
+    <header class="gov-header">
+      <div class="brand-left">
+        <div class="emblem-container" id="emblem-box">
+          <!-- नेपाल सरकारको लोगो नभएको बेलाको फलब्याक आइकन -->
+          <svg viewBox="0 0 100 100" class="default-emblem">
+            <polygon points="50,6 94,90 6,90" fill="#dc2626" stroke="#b91c1c" stroke-width="3"/>
+            <circle cx="50" cy="58" r="22" fill="#ffffff"/>
+            <path d="M40 64Q50 40 60 64Z" fill="#1e3a8a"/>
+            <circle cx="50" cy="46" r="4.5" fill="#f59e0b"/>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1 id="hdr-title">बेनीघाट रोराङ गाउँपालिका</h1>
+          <p id="hdr-sub">गाउँ कार्यपालिकाको कार्यालय &nbsp;|&nbsp; विशालटार, धादिङ, बागमती प्रदेश</p>
+        </div>
+      </div>
+
+      <!-- केन्द्र घडी तथा विक्रम संवत् मिति -->
+      <div class="clock-display">
+        <div class="clock-time" id="clk">--:--:-- --</div>
+        <div class="clock-date" id="dt">नेपाली मिति लोड हुँदैछ...</div>
+      </div>
+
+      <div class="brand-right">
+        <div class="gov-slogan" id="hdr-slogan">
+          सुशासन, पारदर्शिता र समृद्ध बेनीघाट रोराङको आधार
+        </div>
+      </div>
+    </header>
+
+    <!-- २. मुख्य ग्रिड (Main Content Area) -->
+    <main class="grid-main">
+      
+      <!-- बायाँ स्तम्भ: नागरिक बडापत्र -->
+      <section class="card panel-charter">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="badge-icon">📋</span>
+            <div>
+              <h2>नागरिक बडापत्र</h2>
+              <p>सेवा प्रवाह, लाग्ने समय र तोकिएको दस्तुर</p>
+            </div>
+          </div>
+        </div>
+        <div class="charter-table-header">
+          <span>क्र.सं.</span>
+          <span>सेवाको विवरण</span>
+          <span>दस्तुर</span>
+          <span>समय</span>
+        </div>
+        <div class="charter-body" id="charter-list"></div>
+        <div class="card-footer-note">
+          थप स्पष्टताका लागि सम्बन्धित शाखा वा सहायता कक्ष (नागरिक सहायता केन्द्र) मा सम्पर्क गर्नुहोस्।
+        </div>
+      </section>
+
+      <!-- बीचको स्तम्भ: स्लाइडर र प्रमुख पदाधिकारीहरू -->
+      <div class="center-column">
+        <!-- इमेज स्लाइडर -->
+        <section class="slider-wrapper" id="slider-box">
+          <div class="slides-inner" id="slides-container"></div>
+          <div class="slider-counter" id="slide-count">१ / १</div>
+          <div class="slider-indicators" id="slide-dots"></div>
+        </section>
+
+        <!-- प्रमुख जनप्रतिनिधि तथा कर्मचारी -->
+        <section class="officials-grid" id="officials-list"></section>
+      </div>
+
+      <!-- दायाँ स्तम्भ: नवीनतम सूचना र कोठा विवरण -->
+      <div class="right-column">
+        
+        <!-- नवीनतम सूचना -->
+        <section class="card panel-news">
+          <div class="card-header highlight">
+            <div class="card-title-group">
+              <span class="badge-icon">📢</span>
+              <div>
+                <h2>महत्त्वपूर्ण सूचना तथा जानकारी</h2>
+                <p>प्रशासन तथा विकास सम्बन्धी जानकारी</p>
+              </div>
+            </div>
+          </div>
+          <div class="news-list" id="news-container"></div>
+        </section>
+
+        <!-- शाखा तथा कोठा नं. -->
+        <section class="card panel-rooms">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="badge-icon">🏢</span>
+              <div>
+                <h2>शाखा तथा कोठा निर्देशिका</h2>
+                <p>कार्यालय कक्ष तथा तला विवरण</p>
+              </div>
+            </div>
+          </div>
+          <div class="rooms-table-header">
+            <span>कोठा नं.</span>
+            <span>शाखा / कक्ष विवरण</span>
+            <span>तल्ला</span>
+          </div>
+          <div class="rooms-list" id="rooms-container"></div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ३. पुछार (Footer Section) -->
+    <footer class="gov-footer">
+      <div class="footer-tag">नागरिक सहायता</div>
+      <div class="footer-item">
+        <span>कार्यालय समय:</span>
+        <strong id="ft-hours">बिहान १०:०० – साँझ ५:००</strong>
+      </div>
+      <div class="footer-item">
+        <span>सूचना अधिकारी:</span>
+        <strong id="ft-hotline">९८५११८०५०२</strong>
+      </div>
+      <div class="footer-item">
+        <span>इमेल:</span>
+        <strong id="ft-email">benighatrorangmun@gmail.com</strong>
+      </div>
+      <div class="footer-item">
+        <span>वेबसाइट:</span>
+        <strong>benighatrorangmun.gov.np</strong>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- फुलस्क्रिन बटन -->
+  <button class="fullscreen-toggle" id="fs-btn" title="फुलस्क्रिन मोड">⛶ पूर्ण स्क्रिन</button>
+
+  <!-- पहिला डाटा स्क्रिप्ट, त्यसपछि मुख्य लजिक स्क्रिप्ट लोड गर्ने -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

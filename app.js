@@ -47,8 +47,8 @@ function initializeBoard(data) {
   `).join('');
 
   startAutoScroll(
-    charterContainer, 
-    data.settings?.charterScrollStep || 65, 
+    charterContainer,
+    data.settings?.charterScrollStep || 65,
     data.settings?.charterScrollDelayMs || 4000
   );
 
@@ -74,8 +74,8 @@ function initializeBoard(data) {
   `).join('');
 
   startAutoScroll(
-    roomsContainer, 
-    data.settings?.roomsScrollStep || 50, 
+    roomsContainer,
+    data.settings?.roomsScrollStep || 50,
     data.settings?.roomsScrollDelayMs || 3400
   );
 
@@ -138,9 +138,10 @@ function goToSlide(index, durationSec) {
 }
 
 // ३. स्मूथ अटो-स्क्रोलर (टेबुल लुप)
+// मोबाइल/ट्याब्लेटमा सूची पूरै देखिन्छ (भित्री स्क्रोल हुँदैन), त्यसैले त्यहाँ केही हुँदैन
 function startAutoScroll(element, stepPx, intervalMs) {
   setInterval(() => {
-    if (element.scrollHeight > element.clientHeight) {
+    if (element.scrollHeight > element.clientHeight + 2) {
       if (element.scrollTop + element.clientHeight >= element.scrollHeight - 6) {
         element.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -192,9 +193,22 @@ function getNepaliDate(adDate) {
   };
 }
 
+// घडीको HTML एक पटक मात्र बनाउने, त्यसपछि अङ्क मात्र बदल्ने
+let clkRefs = null;
+function buildClock() {
+  $('clk').innerHTML = `
+    <span class="clk-unit" data-k="h">--</span><span class="clk-colon">:</span>
+    <span class="clk-unit" data-k="m">--</span><span class="clk-colon">:</span>
+    <span class="clk-unit clk-sec" data-k="s">--</span>
+    <span class="clk-ampm" data-k="ap"></span>`.replace(/\n\s*/g, '');
+  clkRefs = {};
+  $('clk').querySelectorAll('[data-k]').forEach(el => clkRefs[el.dataset.k] = el);
+}
+
 function updateClock() {
+  if (!clkRefs) buildClock();
   const now = new Date();
-  
+
   const timeStr = now.toLocaleTimeString('en-US', {
     timeZone: 'Asia/Kathmandu',
     hour12: true,
@@ -204,8 +218,11 @@ function updateClock() {
   });
 
   const [rawTime, ampm] = timeStr.split(' ');
-  const nepAmPm = ampm === 'PM' ? 'अपराह्न' : 'पूर्वाह्न';
-  $('clk').textContent = `${np(rawTime)} ${nepAmPm}`;
+  const [h, m, s] = rawTime.split(':');
+  clkRefs.h.textContent = np(h);
+  clkRefs.m.textContent = np(m);
+  clkRefs.s.textContent = np(s);
+  clkRefs.ap.textContent = ampm === 'PM' ? 'अपराह्न' : 'पूर्वाह्न';
 
   const bs = getNepaliDate(now);
   $('dt').textContent = `${bs.dayName}, ${np(bs.day)} ${bs.month} ${np(bs.year)}`;

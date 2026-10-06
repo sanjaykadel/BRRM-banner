@@ -1,7 +1,5 @@
 /* ==========================================================================
    बेनीघाट रोराङ गाउँपालिका - डिजिटल सूचना पाटी
-   Nepal Gov palette: navy / crimson / gold on clean light surfaces
-   Layouts: Kiosk (>1100px) · Tablet (601-1100px) · Mobile (<=600px)
    ========================================================================== */
 
 :root {
@@ -43,7 +41,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Kiosk scaling: 1rem = 1/120 of screen width */
 html { font-size: calc(100vw / 120); }
 
 html, body {
@@ -58,7 +55,7 @@ html, body {
 .kiosk-wrapper {
   height: 100vh;
   display: grid;
-  grid-template-rows: 6.8rem 1fr 3.2rem;
+  grid-template-rows: auto 1fr 3.2rem;
   gap: 0.8rem;
   padding: 0.8rem 1rem;
   background: radial-gradient(circle at 50% 0%, #ffffff 0%, #e2e8f0 100%);
@@ -67,10 +64,11 @@ html, body {
 /* ---------------- 1. Header ---------------- */
 .gov-header {
   display: grid;
-  grid-template-columns: 1.25fr auto 1.25fr;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 0 1.6rem;
+  gap: 1.2rem;
+  padding: 0.6rem 1.6rem;
   border-radius: 0.85rem;
   background: var(--surface-card);
   border: 1px solid var(--border-light);
@@ -90,7 +88,7 @@ html, body {
 .brand-left { display: flex; align-items: center; gap: 1.2rem; min-width: 0; }
 
 .emblem-container {
-  width: 4.4rem; height: 4.4rem;
+  width: 4.6rem; height: 4.6rem;
   border-radius: 50%;
   background: #fff;
   display: grid; place-items: center;
@@ -108,14 +106,14 @@ html, body {
   font-family: var(--font-heading);
   font-size: 2.35rem; font-weight: 700;
   color: var(--crimson-red);
-  line-height: 1.15;
-  white-space: nowrap;
+  line-height: 1.35; /* Increased for top matras */
+  padding-bottom: 0.1rem;
 }
 .brand-titles p {
   font-size: 1.05rem; font-weight: 600;
   color: var(--primary-navy);
   margin-top: 0.1rem;
-  white-space: nowrap;
+  line-height: 1.4;
 }
 
 /* ---------- Clock ---------- */
@@ -123,7 +121,7 @@ html, body {
   position: relative;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 0.25rem;
-  padding: 0.5rem 1.8rem 0.45rem;
+  padding: 0.5rem 1.8rem 0.55rem;
   border-radius: 0.9rem;
   background:
     radial-gradient(120% 140% at 50% -10%, rgba(59,130,246,.38) 0%, rgba(59,130,246,0) 60%),
@@ -133,7 +131,6 @@ html, body {
   overflow: hidden;
   isolation: isolate;
 }
-/* flowing national-colour line on top */
 .clock-display::before {
   content: "";
   position: absolute; left: 0; right: 0; top: 0; height: 0.2rem; z-index: 1;
@@ -144,11 +141,11 @@ html, body {
 
 .clock-time {
   display: flex; align-items: center; justify-content: center;
-  gap: 0.1rem;
+  gap: 0.15rem;
   font-family: var(--font-digits);
   font-weight: 800;
   font-size: 2.55rem;
-  line-height: 1.05;
+  line-height: 1.25;
   color: #fff;
   text-shadow: 0 0 0.9rem rgba(96,165,250,.55);
 }
@@ -163,8 +160,9 @@ html, body {
   letter-spacing: .02em;
   color: #fff;
   background: linear-gradient(135deg, var(--crimson-red), #dc2626);
-  padding: 0.12rem 0.7rem;
+  padding: 0.2rem 0.75rem;
   border-radius: 999px;
+  line-height: 1.3;
   text-shadow: none;
   box-shadow: 0 2px 8px rgba(220,38,38,.45);
 }
@@ -173,7 +171,8 @@ html, body {
   font-size: 1.1rem; font-weight: 700;
   color: #fde68a;
   white-space: nowrap;
-  padding-top: 0.2rem;
+  padding-top: 0.25rem;
+  line-height: 1.4;
   border-top: 1px solid rgba(255,255,255,.16);
   width: 100%;
   text-align: center;
@@ -192,7 +191,7 @@ html, body {
   color: var(--primary-navy);
   text-align: right;
   max-width: 25rem;
-  line-height: 1.35;
+  line-height: 1.5;
   border-left: 3px solid var(--gold-accent);
   padding-left: 0.9rem;
 }
@@ -217,7 +216,7 @@ html, body {
 }
 
 .card-header {
-  padding: 0.55rem 1rem;
+  padding: 0.65rem 1rem;
   background: linear-gradient(90deg, #f8fafc 0%, #fff 100%);
   border-bottom: 2px solid var(--border-light);
 }
@@ -230,18 +229,19 @@ html, body {
 .card-title-group h2 {
   font-family: var(--font-heading);
   font-size: 1.45rem; font-weight: 700;
-  color: var(--primary-navy); line-height: 1.2;
+  color: var(--primary-navy); line-height: 1.35;
 }
-.card-title-group p { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+.card-title-group p { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); line-height: 1.35; }
 
 /* Citizen charter */
 .charter-table-header {
   display: grid;
   grid-template-columns: 2.6rem 1fr 6.2rem 5.5rem;
   gap: 0.5rem;
-  padding: 0.45rem 0.9rem;
+  padding: 0.55rem 0.9rem;
   background: var(--primary-navy);
-  color: #fff; font-weight: 700; font-size: 0.92rem;
+  color: #fff; font-weight: 700; font-size: 0.95rem;
+  line-height: 1.4;
 }
 .charter-body { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
 .charter-body::-webkit-scrollbar { display: none; }
@@ -250,7 +250,7 @@ html, body {
   display: grid;
   grid-template-columns: 2.6rem 1fr 6.2rem 5.5rem;
   gap: 0.5rem; align-items: center;
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 0.9rem;
   border-bottom: 1px solid #f1f5f9;
 }
 .charter-row:nth-child(even) { background: #fbfcfe; }
@@ -259,23 +259,24 @@ html, body {
   font-size: 1.05rem; font-weight: 700;
   color: var(--primary-navy);
   background: var(--light-blue);
-  width: 2rem; height: 2rem; border-radius: 50%;
+  width: 2.1rem; height: 2.1rem; border-radius: 50%;
   display: grid; place-items: center;
   border: 1px solid var(--blue-border);
 }
-.charter-row .c-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); line-height: 1.25; }
-.charter-row .c-fee { font-size: 0.9rem; font-weight: 700; color: var(--crimson-red); }
-.charter-row .c-time { font-size: 0.9rem; font-weight: 700; color: var(--secondary-blue); }
+.charter-row .c-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); line-height: 1.45; word-break: break-word; }
+.charter-row .c-fee { font-size: 0.95rem; font-weight: 700; color: var(--crimson-red); line-height: 1.4; }
+.charter-row .c-time { font-size: 0.95rem; font-weight: 700; color: var(--secondary-blue); line-height: 1.4; }
 
 .card-footer-note {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem; font-weight: 600;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.88rem; font-weight: 600;
+  line-height: 1.45;
   background: var(--gold-bg); color: var(--gold-accent);
   text-align: center; border-top: 1px solid #fde68a;
 }
 
 /* Centre column */
-.center-column { min-height: 0; display: grid; grid-template-rows: 1fr 11.2rem; gap: 0.8rem; }
+.center-column { min-height: 0; display: grid; grid-template-rows: 1fr 11.8rem; gap: 0.8rem; }
 
 .slider-wrapper {
   position: relative; min-height: 0;
@@ -305,17 +306,17 @@ html, body {
 }
 .slide-caption h3 {
   font-family: var(--font-heading);
-  font-size: 2.2rem; font-weight: 700; line-height: 1.2;
+  font-size: 2.2rem; font-weight: 700; line-height: 1.35;
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
-.slide-caption p { font-size: 1.15rem; color: #dbeafe; margin-top: 0.2rem; }
+.slide-caption p { font-size: 1.15rem; color: #dbeafe; margin-top: 0.2rem; line-height: 1.4; }
 
 .slider-counter {
   position: absolute; top: 1rem; left: 1.2rem;
   font-family: var(--font-digits);
   font-size: 1rem; font-weight: 700;
   background: rgba(15, 45, 89, 0.85); color: #fff;
-  padding: 0.2rem 0.8rem; border-radius: 0.4rem;
+  padding: 0.25rem 0.85rem; border-radius: 0.4rem;
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255,255,255,0.2);
 }
@@ -339,7 +340,7 @@ html, body {
 }
 .official-box {
   display: flex; align-items: center; gap: 0.85rem;
-  padding: 0.45rem 0.85rem;
+  padding: 0.5rem 0.85rem;
   background: var(--surface-card);
   border-radius: 0.85rem;
   border: 1px solid var(--border-light);
@@ -351,25 +352,29 @@ html, body {
   width: 4rem; height: 4rem; border-radius: 50%;
   border: 0.16rem solid var(--primary-navy);
   background: var(--light-blue); color: var(--secondary-blue);
-  font-size: 1.6rem; font-weight: 700;
+  font-size: 1.6rem; font-weight: 700; line-height: 1;
   display: grid; place-items: center;
   flex-shrink: 0; overflow: hidden; position: relative;
 }
 .official-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.official-info { min-width: 0; line-height: 1.25; }
-.official-role { font-size: 0.88rem; font-weight: 700; color: var(--crimson-red); }
-.official-name { font-size: 1.15rem; font-weight: 800; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.official-contact { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); }
+.official-info { min-width: 0; line-height: 1.4; }
+.official-role { font-size: 0.88rem; font-weight: 700; color: var(--crimson-red); line-height: 1.35; }
+.official-name { 
+  font-size: 1.15rem; font-weight: 800; color: var(--text-dark); 
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+  line-height: 1.4; padding-bottom: 0.1rem;
+}
+.official-contact { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); line-height: 1.3; }
 
 /* Right column */
-.right-column { min-height: 0; display: grid; grid-template-rows: 1fr 1.35fr; gap: 0.8rem; }
+.right-column { min-height: 0; display: grid; grid-template-rows: 1.7fr 1fr; gap: 0.8rem; }
 
-.news-list { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(4, 1fr); }
+.news-list { flex: 1; min-height: 0; display: grid; grid-auto-rows: minmax(0, 1fr); }
 .news-item {
   padding: 0.45rem 1rem;
   border-bottom: 1px solid #f1f5f9;
   border-left: 0.3rem solid var(--primary-navy);
-  display: flex; flex-direction: column; justify-content: center; gap: 0.15rem;
+  display: flex; flex-direction: column; justify-content: center; gap: 0.2rem;
 }
 .news-item:nth-child(even) { background: #fbfcfe; }
 .news-item:last-child { border-bottom: none; }
@@ -379,44 +384,69 @@ html, body {
 .news-tag {
   font-family: var(--font-digits);
   font-size: 0.85rem; font-weight: 700;
-  padding: 0.05rem 0.6rem; border-radius: 0.3rem;
+  padding: 0.1rem 0.6rem; border-radius: 0.3rem;
   background: var(--light-blue); color: var(--secondary-blue);
+  line-height: 1.3;
 }
 .urgent .news-tag { background: var(--crimson-red); color: #fff; }
 .new .news-tag { background: #16a34a; color: #fff; }
 .news-item time { font-size: 0.88rem; font-weight: 700; color: var(--primary-navy); }
 .news-item p {
-  font-size: 0.98rem; font-weight: 600; line-height: 1.25; color: var(--text-dark);
+  font-size: 0.95rem; font-weight: 600; line-height: 1.4; color: var(--text-dark);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* Rooms */
-.rooms-table-header {
-  display: grid; grid-template-columns: 4rem 1fr 5.5rem;
-  padding: 0.35rem 0.8rem;
-  background: #f1f5f9; border-bottom: 1px solid var(--border-light);
-  font-size: 0.88rem; font-weight: 700; color: var(--text-medium);
+/* Rooms: sliding cards */
+.rooms-list { flex: 1; min-height: 0; overflow: hidden; position: relative; touch-action: pan-y; }
+.rooms-track { display: flex; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+.rooms-page {
+  flex: 0 0 100%; height: 100%;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr);
+  gap: 0.5rem; padding: 0.5rem 0.7rem;
 }
-.rooms-list { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
-.rooms-list::-webkit-scrollbar { display: none; }
-.room-row {
-  display: grid; grid-template-columns: 4rem 1fr 5.5rem; align-items: center;
-  padding: 0.35rem 0.8rem; border-bottom: 1px solid #f1f5f9;
+.room-card {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.7rem;
+  background: linear-gradient(135deg, #ffffff 0%, var(--light-blue) 100%);
+  border: 1px solid var(--blue-border);
+  border-left: 0.3rem solid var(--secondary-blue);
+  box-shadow: var(--shadow-sm);
+  min-width: 0; overflow: hidden;
 }
-.room-row:nth-child(even) { background: #fbfcfe; }
-.room-row:last-child { border-bottom: none; }
-.room-row .r-no {
-  font-family: var(--font-digits);
-  font-size: 1.05rem; font-weight: 800;
-  background: var(--light-blue); color: var(--secondary-blue);
-  border: 1px solid var(--blue-border); border-radius: 0.35rem;
-  text-align: center; padding: 0.1rem 0; width: 3.4rem;
+.room-card .r-no {
+  flex-shrink: 0;
+  min-width: 2.6rem; height: 2.6rem; padding: 0 0.3rem;
+  display: grid; place-items: center;
+  font-family: var(--font-digits); font-size: 1.2rem; font-weight: 800;
+  color: #fff;
+  background: linear-gradient(145deg, var(--primary-navy), var(--secondary-blue));
+  border-radius: 0.65rem;
+  box-shadow: 0 2px 6px rgba(15,45,89,.3);
 }
-.room-row .r-name {
-  font-size: 0.98rem; font-weight: 600; color: var(--text-dark);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 0.5rem;
+.room-card .r-body { min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.room-card .r-name {
+  font-size: 0.95rem; font-weight: 700; line-height: 1.35; color: var(--text-dark);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  padding-bottom: 0.05rem;
 }
-.room-row .r-floor { font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); text-align: right; }
+.room-card .r-floor {
+  align-self: flex-start;
+  font-size: 0.75rem; font-weight: 700; line-height: 1.45;
+  color: var(--gold-accent); background: var(--gold-bg);
+  border: 1px solid #fde68a; border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+}
+.rooms-dots {
+  display: flex; justify-content: center; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0 0.45rem;
+}
+.rooms-dots:empty { display: none; }
+.rooms-dots i {
+  display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+  background: #cbd5e1; cursor: pointer; transition: all 0.3s;
+}
+.rooms-dots i.active { width: 1.5rem; border-radius: 0.3rem; background: var(--crimson-red); }
 
 /* ---------------- 3. Footer ---------------- */
 .gov-footer {
@@ -432,11 +462,13 @@ html, body {
   font-family: var(--font-digits); font-weight: 800; font-size: 1.15rem;
   padding: 0 1.6rem; height: 100%;
   display: grid; place-items: center;
+  line-height: 1.3;
 }
 .footer-item {
   display: flex; align-items: center; justify-content: center; gap: 0.55rem;
   font-size: 1.05rem; font-weight: 600; color: var(--text-medium);
   border-left: 1px solid var(--border-light); height: 100%;
+  line-height: 1.35;
 }
 .footer-item strong { color: var(--primary-navy); font-weight: 700; }
 
@@ -444,19 +476,13 @@ html, body {
   position: fixed; bottom: 0.3rem; right: 0.5rem; z-index: 99;
   background: rgba(15, 45, 89, 0.8); color: #fff;
   border: 1px solid rgba(255,255,255,0.2); border-radius: 0.4rem;
-  padding: 0.25rem 0.6rem; font-size: 0.75rem;
-  cursor: pointer; opacity: 0.35; transition: opacity 0.2s;
+  padding: 0.35rem 0.65rem; font-size: 0.85rem;
+  cursor: pointer; opacity: 0.4; transition: opacity 0.2s;
+  line-height: 1.3;
 }
 .fullscreen-toggle:hover { opacity: 1; }
 
-/* Big TV screens */
-@media (min-height: 1000px) and (min-width: 1700px) {
-  .grid-main { grid-template-columns: 36rem 1fr 40rem; }
-}
-
-/* ==========================================================================
-   TABLET + MOBILE: normal scrolling page with fixed pixel sizes
-   ========================================================================== */
+/* Responsive Adjustments */
 @media (max-width: 1100px) {
   html { font-size: 15px; }
   html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
@@ -469,7 +495,6 @@ html, body {
     padding: max(0.7rem, env(safe-area-inset-top)) max(0.7rem, env(safe-area-inset-right)) max(0.7rem, env(safe-area-inset-bottom)) max(0.7rem, env(safe-area-inset-left));
   }
 
-  /* header: logo+title row, clock row, slogan row */
   .gov-header {
     grid-template-columns: 1fr auto;
     grid-template-areas: "brand clock" "slogan slogan";
@@ -480,8 +505,8 @@ html, body {
   .clock-display { grid-area: clock; }
   .brand-right { grid-area: slogan; justify-content: center; }
   .emblem-container { width: 4rem; height: 4rem; }
-  .brand-titles h1 { font-size: 1.7rem; white-space: normal; }
-  .brand-titles p { font-size: 0.95rem; white-space: normal; }
+  .brand-titles h1 { font-size: 1.7rem; white-space: normal; line-height: 1.35; }
+  .brand-titles p { font-size: 0.95rem; white-space: normal; line-height: 1.4; }
   .clock-time { font-size: 2.2rem; }
   .clock-date { font-size: 0.95rem; }
   .gov-slogan {
@@ -489,7 +514,6 @@ html, body {
     font-size: 1.05rem; border-left: 0; padding-left: 0;
   }
 
-  /* two-column body, slider + officials on top */
   .grid-main {
     display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
     align-items: start; min-height: auto;
@@ -503,10 +527,14 @@ html, body {
   .card { overflow: visible; }
   .card-header { border-radius: 0.85rem 0.85rem 0 0; }
   .card-footer-note { border-radius: 0 0 0.85rem 0.85rem; }
-  .charter-body, .rooms-list, .news-list { overflow: visible; display: block; }
-  .news-item { padding: 0.65rem 1rem; }
+  .charter-body, .news-list { overflow: visible; display: block; }
+  .rooms-list { flex: none; }
+  .rooms-track { height: auto; }
+  .rooms-page { height: auto; grid-template-columns: 1fr; grid-auto-rows: auto; align-content: start; }
+  .room-card { padding: 0.45rem 0.7rem; }
+  .news-list { grid-auto-rows: auto; }
+  .news-item { padding: 0.65rem 1rem; overflow: visible; }
   .news-item p { -webkit-line-clamp: unset; display: block; }
-  .room-row .r-name { white-space: normal; }
 
   .gov-footer { grid-template-columns: repeat(2, 1fr); }
   .footer-tag { grid-column: 1 / -1; padding: 0.6rem; }
@@ -515,7 +543,6 @@ html, body {
   .fullscreen-toggle { display: none; }
 }
 
-/* ---------------- Mobile ---------------- */
 @media (max-width: 700px) {
   html { font-size: 16px; }
 
@@ -526,12 +553,12 @@ html, body {
   }
   .brand-left { gap: 0.75rem; }
   .emblem-container { width: 3.4rem; height: 3.4rem; }
-  .brand-titles h1 { font-size: 1.3rem; }
-  .brand-titles p { font-size: 0.8rem; margin-top: 0.15rem; line-height: 1.35; }
+  .brand-titles h1 { font-size: 1.3rem; line-height: 1.35; }
+  .brand-titles p { font-size: 0.8rem; margin-top: 0.15rem; line-height: 1.4; }
 
   .clock-display { width: 100%; padding: 0.7rem 0.8rem 0.6rem; border-radius: 1rem; gap: 0.35rem; }
   .clock-time { font-size: 2.35rem; flex-wrap: nowrap; }
-  .clk-ampm { font-size: 0.8rem; margin-left: 0.5rem; padding: 0.1rem 0.6rem; }
+  .clk-ampm { font-size: 0.8rem; margin-left: 0.5rem; padding: 0.15rem 0.6rem; }
   .clock-date { font-size: 0.95rem; white-space: normal; padding-top: 0.35rem; }
   .gov-slogan { font-size: 0.9rem; }
 
@@ -543,7 +570,6 @@ html, body {
   .card-title-group h2 { font-size: 1.15rem; }
   .card-title-group p { font-size: 0.75rem; }
 
-  /* slider */
   .slider-wrapper { aspect-ratio: 16 / 10; min-height: 0; border-radius: 0.9rem; }
   .slide-item .fallback-icon { font-size: 5rem; }
   .slide-caption { padding: 2rem 1rem 0.9rem; }
@@ -554,7 +580,6 @@ html, body {
   .slider-indicators i { width: 0.4rem; height: 0.4rem; }
   .slider-indicators i.active { width: 1.1rem; }
 
-  /* officials */
   .officials-grid { grid-template-columns: 1fr; gap: 0.55rem; }
   .official-box { padding: 0.55rem 0.8rem; gap: 0.75rem; }
   .official-photo { width: 3.3rem; height: 3.3rem; font-size: 1.3rem; }
@@ -562,45 +587,27 @@ html, body {
   .official-name { font-size: 1.05rem; }
   .official-contact { font-size: 0.82rem; }
 
-  /* charter: card-style rows */
-  .charter-table-header, .rooms-table-header { display: none; }
+  .charter-table-header { display: none; }
   .charter-row {
-    grid-template-columns: 2.2rem 1fr;
-    grid-template-areas: "no title" "no meta";
-    gap: 0.15rem 0.7rem;
+    grid-template-columns: 2.2rem auto 1fr;
+    grid-template-areas: "no title title" "no fee time";
+    gap: 0.25rem 0.7rem;
     padding: 0.7rem 0.9rem;
     align-items: start;
   }
   .charter-row .c-no { grid-area: no; width: 1.9rem; height: 1.9rem; font-size: 0.95rem; }
-  .charter-row .c-title { grid-area: title; font-size: 1rem; }
-  .charter-row .c-fee, .charter-row .c-time {
-    grid-area: meta; justify-self: start;
-    font-size: 0.8rem; padding: 0.05rem 0.55rem; border-radius: 999px; margin-top: 0.25rem;
-  }
-  .charter-row .c-fee { background: var(--red-subtle); border: 1px solid #fecaca; }
-  .charter-row .c-time { background: var(--light-blue); border: 1px solid var(--blue-border); margin-left: 0; }
-  /* put fee and time side by side inside the meta row */
-  .charter-row { grid-template-columns: 2.2rem auto 1fr; grid-template-areas: "no title title" "no fee time"; }
-  .charter-row .c-fee { grid-area: fee; }
-  .charter-row .c-time { grid-area: time; }
+  .charter-row .c-title { grid-area: title; font-size: 1rem; line-height: 1.4; }
+  .charter-row .c-fee { grid-area: fee; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; margin-top: 0.25rem; background: var(--red-subtle); border: 1px solid #fecaca; }
+  .charter-row .c-time { grid-area: time; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; margin-top: 0.25rem; background: var(--light-blue); border: 1px solid var(--blue-border); }
   .card-footer-note { font-size: 0.78rem; padding: 0.55rem 0.8rem; line-height: 1.4; }
 
-  /* news */
   .news-item { padding: 0.6rem 0.85rem; }
   .news-item p { font-size: 0.95rem; }
 
-  /* rooms */
-  .room-row { grid-template-columns: 3.4rem 1fr auto; gap: 0.6rem; padding: 0.55rem 0.85rem; }
-  .room-row .r-name { font-size: 0.95rem; line-height: 1.3; padding-right: 0; }
-  .room-row .r-floor { font-size: 0.8rem; white-space: nowrap; }
+  .room-card .r-no { min-width: 2.6rem; height: 2.6rem; font-size: 1.15rem; }
+  .room-card .r-name { font-size: 0.95rem; }
 
   .gov-footer { grid-template-columns: 1fr; }
   .footer-item { justify-content: space-between; font-size: 0.9rem; text-align: right; }
   .footer-item span { color: var(--text-muted); }
-}
-
-@media (max-width: 380px) {
-  .clock-time { font-size: 2rem; }
-  .brand-titles h1 { font-size: 1.15rem; }
-  .clk-ampm { display: none; }
 }

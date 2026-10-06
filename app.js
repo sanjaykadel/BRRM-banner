@@ -53,7 +53,7 @@ function initializeBoard(data) {
   );
 
   // D. नवीनतम सूचना
-  $('news-container').innerHTML = (data.news || []).map(n => `
+  $('news-container').innerHTML = (data.news || []).slice(0, data.settings?.newsCount || 6).map(n => `
     <div class="news-item ${n.b}">
       <div class="news-header-meta">
         <span class="news-tag">${n.l}</span>
@@ -63,21 +63,16 @@ function initializeBoard(data) {
     </div>
   `).join('');
 
-  // E. कोठा तथा शाखा विवरण
-  const roomsContainer = $('rooms-container');
-  roomsContainer.innerHTML = (data.rooms || []).map(r => `
-    <div class="room-row">
-      <span class="r-no">${r.no}</span>
-      <span class="r-name">${r.name}</span>
-      <span class="r-floor">${r.floor} तल्ला</span>
-    </div>
-  `).join('');
-
-  startAutoScroll(
-    roomsContainer,
-    data.settings?.roomsScrollStep || 50,
-    data.settings?.roomsScrollDelayMs || 3400
-  );
+  // E. कोठा तथा शाखा विवरण (कार्ड स्लाइडर)
+  roomsData = data.rooms || [];
+  roomsDelayMs = data.settings?.roomsSlideDelayMs || 5000;
+  renderRooms();
+  window.matchMedia('(max-width: 1100px)').addEventListener('change', renderRooms);
+  setupRoomsSwipe();
+  let rzT;
+  const rerender = () => { clearTimeout(rzT); rzT = setTimeout(renderRooms, 250); };
+  window.addEventListener('resize', rerender);
+  window.addEventListener('load', renderRooms);
 
   // F. पदाधिकारी विवरण
   $('officials-list').innerHTML = (data.person || []).map(p => `
@@ -135,6 +130,68 @@ function goToSlide(index, durationSec) {
   sliderTimer = setInterval(() => {
     goToSlide(currentSlideIndex + 1, durationSec);
   }, durationSec * 1000);
+}
+
+// कोठा कार्ड स्लाइडर
+let roomsData = [];
+let roomsDelayMs = 5000;
+let roomsPage = 0;
+let roomsPages = 1;
+let roomsTimer = null;
+
+function renderRooms() {
+  const track = $('rooms-container');
+  const dots = $('rooms-dots');
+  const compact = window.matchMedia('(max-width: 1100px)').matches;
+  let perPage = 4;
+  if (!compact) {
+    // पाटीको उचाइ अनुसार कति पङ्क्ति अटाउँछ भनेर आफैँ हिसाब गर्ने (२ कार्ड प्रति पङ्क्ति)
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const rows = Math.max(1, Math.floor((track.clientHeight - 1.0 * rem + 0.5 * rem) / (3.8 * rem + 0.5 * rem)));
+    perPage = rows * 2;
+  }
+
+  const pages = [];
+  for (let i = 0; i < roomsData.length; i += perPage) pages.push(roomsData.slice(i, i + perPage));
+  roomsPages = pages.length || 1;
+  roomsPage = 0;
+
+  track.innerHTML = '<div class="rooms-track" id="rooms-track">' + pages.map(pg => `
+    <div class="rooms-page">${pg.map(r => `
+      <div class="room-card">
+        <span class="r-no">${r.no}</span>
+        <div class="r-body">
+          <span class="r-name">${r.name}</span>
+          <span class="r-floor">${r.floor} तल्ला</span>
+        </div>
+      </div>`).join('')}
+    </div>`).join('') + '</div>';
+
+  dots.innerHTML = pages.length > 1 ? pages.map(() => '<i></i>').join('') : '';
+  [...dots.children].forEach((d, i) => d.addEventListener('click', () => goToRoomsPage(i)));
+  goToRoomsPage(0);
+}
+
+function goToRoomsPage(i) {
+  roomsPage = (i + roomsPages) % roomsPages;
+  const t = $('rooms-track');
+  if (t) t.style.transform = `translateX(-${roomsPage * 100}%)`;
+  [...$('rooms-dots').children].forEach((d, k) => d.classList.toggle('active', k === roomsPage));
+
+  clearInterval(roomsTimer);
+  if (roomsPages > 1) roomsTimer = setInterval(() => goToRoomsPage(roomsPage + 1), roomsDelayMs);
+}
+
+function setupRoomsSwipe() {
+  let x0 = null;
+  const el = $('rooms-container');
+  el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  el.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) goToRoomsPage(roomsPage + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
 }
 
 // ३. स्मूथ अटो-स्क्रोलर (टेबुल लुप)
@@ -259,3 +316,30 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error("data.js फाइल फेला परेन वा लोड हुन सकेन।");
   }
 });
+
+// Helper to extract the full first letter/grapheme cluster for Devanagari
+function getFirstGrapheme(str) {
+  if (!str) return '•';
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    const segmenter = new Intl.Segmenter('ne', { granularity: 'grapheme' });
+    const iterator = segmenter.segment(str)[Symbol.iterator]();
+    return iterator.next().value?.segment || str[0];
+  }
+  return Array.from(str)[0]; // fallback
+}
+
+// In initializeBoard():
+// F. पदाधिकारी विवरण
+$('officials-list').innerHTML = (data.person || []).map(p => `
+  <div class="official-box">
+    <div class="official-photo">
+      ${getFirstGrapheme(p.n)}
+      <img src="${p.i}" alt="${p.r}" onerror="this.remove()">
+    </div>
+    <div class="official-info">
+      <div class="official-role">${p.r}</div>
+      <div class="official-name">${p.n}</div>
+      <div class="official-contact">${p.c}</div>
+    </div>
+  </div>
+`).join('');
